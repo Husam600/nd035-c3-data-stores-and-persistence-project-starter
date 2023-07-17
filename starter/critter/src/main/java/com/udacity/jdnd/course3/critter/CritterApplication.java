@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Launches the Spring application. Unmodified from starter code.
  */
-
 @SpringBootApplication
 public class CritterApplication {
 
