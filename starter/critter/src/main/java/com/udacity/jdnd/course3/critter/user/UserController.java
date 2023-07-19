@@ -1,16 +1,20 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.udacity.jdnd.course3.critter.common.ObjectNotFoundException;
 import com.udacity.jdnd.course3.critter.customer.Customer;
 import com.udacity.jdnd.course3.critter.customer.CustomerDTO;
 import com.udacity.jdnd.course3.critter.customer.CustomerService;
 import com.udacity.jdnd.course3.critter.employee.Employee;
 import com.udacity.jdnd.course3.critter.employee.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.employee.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,10 +32,13 @@ public class UserController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    PetService petService;
+
     @PostMapping("/customer")
-    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        Customer customer = customerService.saveCustomer(convertCustomerDTOToCustomer(customerDTO));
-        return convertCustomerToCustomerDTO(customer);
+    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
+        Customer customer = convertCustomerDTOToCustomer(customerDTO);
+        return convertCustomerToCustomerDTO(customerService.saveCustomer(customer));
     }
 
     @GetMapping("/customer")
@@ -44,7 +51,13 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+        try {
+            Customer customer = customerService.getOwnerByPet(petId);
+            return convertCustomerToCustomerDTO(customer);
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @PostMapping("/employee")
@@ -70,6 +83,12 @@ public class UserController {
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer, customerDTO);
+        List<Pet> petList = customer.getPets();
+        List<Long> petIds = new ArrayList<>();
+        for (Pet pet : petList) {
+            petIds.add(pet.getId());
+        }
+        customerDTO.setPetIds(petIds);
         return customerDTO;
     }
 

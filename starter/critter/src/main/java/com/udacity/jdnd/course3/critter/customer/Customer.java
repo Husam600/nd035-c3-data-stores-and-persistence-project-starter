@@ -6,12 +6,10 @@ import com.udacity.jdnd.course3.critter.user.User;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="customer")
 public class Customer extends User {
 
     private String phoneNumber;

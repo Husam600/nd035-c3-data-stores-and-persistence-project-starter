@@ -15,23 +15,22 @@ import java.util.Set;
 @Table(name = "schedule")
 public class Schedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinColumn(name = "schedule_id")
     private List<Employee> employees = new ArrayList<>();
 
-    @JoinColumn
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinColumn(name = "schedule_id")
     private List<Pet> pets = new ArrayList<>();
 
     private LocalDate date;
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
-    private Set<EmployeeSkill> activities = new HashSet<>();
+    private Set<EmployeeSkill> activities;
 
     public Schedule(Long id, List<Employee> employees, List<Pet> pets, LocalDate date, Set<EmployeeSkill> activities) {
         this.id = id;

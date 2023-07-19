@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.udacity.jdnd.course3.critter.customer.Customer;
 import org.hibernate.annotations.Nationalized;
 
@@ -10,8 +11,7 @@ import java.time.LocalDate;
 @Table(name = "pet")
 public class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -21,7 +21,7 @@ public class Pet {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "owner_id")
     private Customer customer;
 
     private LocalDate birthDate;
