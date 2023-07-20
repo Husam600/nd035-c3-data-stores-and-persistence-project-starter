@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -37,6 +40,19 @@ public class EmployeeService {
             employee.get().setDaysAvailable(daysAvailable);
             employeeRepository.save(employee.get());
         }
+    }
+
+    public List<EmployeeDTO> findEmployeesForService(EmployeeRequestDTO employeeRequestDTO) {
+        DayOfWeek searchedDay = employeeRequestDTO.getDate().getDayOfWeek();
+        List<Employee> employeeListFreeInThatDay = employeeRepository.findEmployeeByDateAvailable(searchedDay);
+        List<Employee> employeeListFreeInThatDayAndHavingTheSkills = new ArrayList<>();
+        Set<EmployeeSkill> requestEmployeeSkills = employeeRequestDTO.getSkills();
+        for (Employee employee : employeeListFreeInThatDay){
+            if (employee.getSkills().containsAll(requestEmployeeSkills)) {
+                employeeListFreeInThatDayAndHavingTheSkills.add(employee);
+            }
+        }
+        return employeeListFreeInThatDayAndHavingTheSkills.stream().map(this::convertEmployeeToEmployeeDTO).collect(Collectors.toList());
     }
 
     private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
