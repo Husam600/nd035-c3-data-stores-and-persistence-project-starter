@@ -1,12 +1,12 @@
 package com.udacity.jdnd.course3.critter.user;
 
-import com.udacity.jdnd.course3.critter.common.ObjectNotFoundException;
 import com.udacity.jdnd.course3.critter.customer.Customer;
 import com.udacity.jdnd.course3.critter.customer.CustomerDTO;
 import com.udacity.jdnd.course3.critter.customer.CustomerService;
 import com.udacity.jdnd.course3.critter.employee.Employee;
 import com.udacity.jdnd.course3.critter.employee.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.employee.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.employee.EmployeeService;
 import com.udacity.jdnd.course3.critter.pet.Pet;
 import com.udacity.jdnd.course3.critter.pet.PetService;
 import org.springframework.beans.BeanUtils;
@@ -33,81 +33,43 @@ public class UserController {
     CustomerService customerService;
 
     @Autowired
+    EmployeeService employeeService;
+
+    @Autowired
     PetService petService;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        Customer customer = convertCustomerDTOToCustomer(customerDTO);
-        return convertCustomerToCustomerDTO(customerService.saveCustomer(customer));
+        return customerService.saveCustomer(customerDTO);
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        List<Customer> customerList = customerService.getCustomerList();
-        return customerList.stream()
-                .map(this::convertCustomerToCustomerDTO)
-                .collect(Collectors.toList());
+        return customerService.getCustomerList();
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        try {
-            Customer customer = customerService.getOwnerByPet(petId);
-            return convertCustomerToCustomerDTO(customer);
-        } catch (ObjectNotFoundException e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return customerService.getOwnerByPet(petId);
     }
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        return employeeService.saveEmployee(employeeDTO);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return employeeService.findEmployeeById(employeeId);
     }
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        employeeService.setEmployeeAvailability(daysAvailable, employeeId);
     }
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
         throw new UnsupportedOperationException();
     }
-
-    private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
-        CustomerDTO customerDTO = new CustomerDTO();
-        BeanUtils.copyProperties(customer, customerDTO);
-        List<Pet> petList = customer.getPets();
-        List<Long> petIds = new ArrayList<>();
-        for (Pet pet : petList) {
-            petIds.add(pet.getId());
-        }
-        customerDTO.setPetIds(petIds);
-        return customerDTO;
-    }
-
-    private Customer convertCustomerDTOToCustomer(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDTO, customer);
-        return customer;
-    }
-
-    private EmployeeDTO convertEmployeeToEmployeeDTO(Employee employee) {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        BeanUtils.copyProperties(employee, employeeDTO);
-        return employeeDTO;
-    }
-
-    private Employee convertEmployeeDTOToEmployee(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDTO, employee);
-        return employee;
-    }
-
 }
