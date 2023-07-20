@@ -55,7 +55,8 @@ public class ScheduleService {
         for (Pet pet : petLisOfCustomer) {
             for (ScheduleDTO scheduleDTO : getScheduleForPet(pet.getId())){
                if (!scheduleIdList.contains(scheduleDTO.getId())) {
-                  scheduleDTOList.add(scheduleDTO);
+                   scheduleIdList.add(scheduleDTO.getId());
+                   scheduleDTOList.add(scheduleDTO);
                }
             }
         }
