@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.customer.Customer;
 import com.udacity.jdnd.course3.critter.customer.CustomerRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ public class PetService {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Transactional
     public PetDTO savePet(PetDTO petDTO) {
         Pet pet = petRepository.save(convertPetDTOToPet(petDTO));
         return convertPetToPetDTO(pet);
@@ -52,14 +52,14 @@ public class PetService {
     private Pet convertPetDTOToPet(PetDTO petDTO) {
         Pet pet = new Pet();
         BeanUtils.copyProperties(petDTO, pet);
-        pet.setCustomer(customerRepository.findById(petDTO.getOwnerId()).get());
+        pet.setCustomer(customerRepository.findById(petDTO.getCustomerId()).get());
         return pet;
     }
 
     private PetDTO convertPetToPetDTO(Pet pet) {
         PetDTO petDTO = new PetDTO();
         BeanUtils.copyProperties(pet, petDTO);
-        petDTO.setOwnerId(pet.getCustomer().getId());
+        petDTO.setCustomerId(pet.getCustomer().getId());
         return petDTO;
     }
 }

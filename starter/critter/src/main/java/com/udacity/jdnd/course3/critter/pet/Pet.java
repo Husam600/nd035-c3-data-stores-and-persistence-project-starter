@@ -21,7 +21,7 @@ public class Pet {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private LocalDate birthDate;
