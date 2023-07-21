@@ -8,7 +8,7 @@ public class EntityHelper {
 
     public static Pet petDTOToEntity(PetDTO petDTO, CustomerService customerService) {
         Pet pet = new Pet();
-        BeanUtils.copyProperties(petDTO, pet, "ownerId");
+        BeanUtils.copyProperties(petDTO, pet, "customerId");
         Long userId = petDTO.getCustomerId();
         Customer customer = customerService.getCustomerById(userId);
         pet.setCustomer(customer);
