@@ -46,12 +46,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerById(long customerId) {
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        if (customer.isEmpty()) {
-            throw new EntityNotFoundException();
-        } else {
-            return customer.get();
-        }
+        return customerRepository.getOne(customerId);
     }
 
     private CustomerDTO convertCustomerToCustomerDTO(Customer customer) {
