@@ -25,6 +25,11 @@ public class EmployeeService {
         return convertEmployeeToEmployeeDTO(employee);
     }
 
+    public List<EmployeeDTO> getAllEmployee(){
+        List<Employee> employeeList = employeeRepository.findAll();
+        return employeeList.stream().map(this::convertEmployeeToEmployeeDTO).collect(Collectors.toList());
+    }
+
     public EmployeeDTO findEmployeeById(Long employeeId) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         if (employee.isEmpty()) {

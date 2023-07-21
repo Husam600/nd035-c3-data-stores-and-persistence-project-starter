@@ -53,6 +53,11 @@ public class UserController {
         return customerService.getOwnerByPet(petId);
     }
 
+    @GetMapping("/employee")
+    public List<EmployeeDTO> getAllEmployee(){
+        return employeeService.getAllEmployee();
+    }
+
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         return employeeService.saveEmployee(employeeDTO);
