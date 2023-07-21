@@ -91,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Hannah\",\r\n  \"skills\": [\"PETTING\", \"FEEDING\"]\r\n}",
+					"raw": "{\r\n  \"name\": \"Hannah\",\r\n  \"skills\": [\"PETTING\", \"FEEDING\"]\r\n,\n  \"daysAvailable\": [\"SATURDAY\", \"MONDAY\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employeeIds\": [\"3\"],\r\n  \"petIds\": [\"2\"],\r\n  \"date\": \"2019-12-17\",\r\n  \"activities\": [\"PETTING\", \"FEEDING\"]\r\n}",
+					"raw": "{\r\n  \"employeeIds\": [\"1\"],\r\n  \"petIds\": [\"1\"],\r\n  \"date\": \"2019-12-17\",\r\n  \"activities\": [\"PETTING\", \"FEEDING\"]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,7 +170,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/user/employee/3",
+					"raw": "http://localhost:8082/user/employee/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -179,7 +179,7 @@
 					"path": [
 						"user",
 						"employee",
-						"3"
+						"1"
 					]
 				}
 			},
@@ -202,7 +202,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"date\": \"2019-12-17\",\n\t\"skills\": [\"PETTING\", \"FEEDING\"]\n}",
+					"raw": "{\n\t\"date\": \"2023-07-17\",\n\t\"skills\": [\"PETTING\", \"FEEDING\"]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -250,7 +250,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/schedule/pet/2",
+					"raw": "http://localhost:8082/schedule/pet/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -259,7 +259,7 @@
 					"path": [
 						"schedule",
 						"pet",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -290,7 +290,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/schedule/employee/3",
+					"raw": "http://localhost:8082/schedule/employee/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -299,7 +299,7 @@
 					"path": [
 						"schedule",
 						"employee",
-						"3"
+						"1"
 					]
 				}
 			},
@@ -385,6 +385,83 @@
 			"response": []
 		},
 		{
+			"name": "Get All Employee",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/user/employee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"user",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Schedule",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get All Pets",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -447,7 +524,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/pet/2",
+					"raw": "http://localhost:8082/pet/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -455,7 +532,7 @@
 					"port": "8082",
 					"path": [
 						"pet",
-						"2"
+						"1"
 					]
 				}
 			},
@@ -526,7 +603,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8082/user/customer/pet/2",
+					"raw": "http://localhost:8082/user/customer/pet/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -536,7 +613,7 @@
 						"user",
 						"customer",
 						"pet",
-						"2"
+						"1"
 					]
 				}
 			},
