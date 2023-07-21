@@ -39,8 +39,9 @@ public class EmployeeService {
         if (employee.isEmpty()) {
             throw new EntityNotFoundException();
         } else {
-            employee.get().setDaysAvailable(daysAvailable);
-            employeeRepository.save(employee.get());
+            Employee updatedEmployee = employee.get();
+            updatedEmployee.setDaysAvailable(daysAvailable);
+            employeeRepository.save(updatedEmployee);
         }
     }
 
